@@ -45,8 +45,10 @@ DOCKERX_IMAGE_CSI_DRIVER:=${IMAGE_ORG}/zfs-driver:${TAG}
 docker.buildx:
 	export DOCKER_CLI_EXPERIMENTAL=enabled
 	@if ! docker buildx ls | grep -q container-builder; then\
+		echo "Ran in action" && \
 		docker buildx create --platform ${PLATFORMS} --name container-builder --use;\
 	fi
+	@echo "above command ran with success"
 	@docker buildx build --platform "${PLATFORMS}" \
 		-t "$(DOCKERX_IMAGE_NAME)" ${BUILD_ARGS} \
 		-f $(PWD)/buildscripts/$(COMPONENT)/$(COMPONENT).Dockerfile \
